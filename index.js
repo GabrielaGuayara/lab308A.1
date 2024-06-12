@@ -20,75 +20,89 @@ Within the catch, log the error and the value of the counter variable.*/
 // //PART TWO: Trampolines
 // // Write a recursive function that completely flattens an array of nested arrays, regardless of how deeply nested the arrays are.
 // // Once your recursive function is complete, trampoline it.
-// let nestedArray = [[1,5],[4,[5],6],[7,8,[9]]];
+let nestedArray = [[1,5],[4,[5],6],[7,8,[9]]];
 
-// const flatArray = (arr) => {
-//     let newArr = [];
+const flatArray = (arr) => {
+    let newArr = [];
     
-//     for(let i = 0; i < arr.length; i++ ){
-//         if(Array.isArray(arr[i])){
-//             newArr = newArr.concat(flatArray(arr[i]))
-//         }
-//         else{
-//             newArr.push(arr[i])
-//         }
-//     }
-//     return newArr;
-// }
+    for(let i = 0; i < arr.length; i++ ){
+        if(Array.isArray(arr[i])){
+            newArr = newArr.concat(flatArray(arr[i]))
+        }
+        else{
+            newArr.push(arr[i])
+        }
+    }
+    return newArr;
+}
 
-// console.log(flatArray(nestedArray))
+console.log(flatArray(nestedArray))
 
-// const flatArrTwo = (arr, result = []) =>{
-//     if(!Array.isArray(arr)){
-//         return result.concat(arr)
-//     }
+const flatArrTwo = (arr, result = []) =>{
+    if(!Array.isArray(arr)){
+        return result.push(arr)
+    }
+    else{
+    for(let i = 0; i< arr.length; i++){
+        if(Array.isArray(arr[i])){
+           flatArrTwo(arr[i], result)
+        }else{
+            result.push(arr[i])
+        }
+    }
+    }
+    return result;
+}
 
-//     for(let i = 0; i< arr.length; i++){
-//         if(Array.isArray(arr[i])){
-//            return () => flatArrTwo(arr[i], result)
-//         }else{
-//             result.push(arr[i])
-//         }
-//     }
+const trampoline = (f, ...args) => {
+    let result = f(...args);
+    while (typeof result === "function") {
+      result = result();
+    }
+    return result;
+  }
 
-//     return result;
-// }
-
-// const trampoline = (f, ...args) => {
-//     let result = f(...args);
-//     while (typeof result === "function") {
-//       result = result();
-//     }
-//     return result;
-//   }
-
-// console.log(trampoline(flatArrTwo, nestedArray))
+console.log(trampoline(flatArrTwo, nestedArray))
 
 
 //PART THREE: Deferred Execution
 /*Create a simple HTML element to hold text. Cache this HTML element into a JavaScript variable.
-Write a function that takes a parameter n and adds a list of all prime numbers between one and n to your HTML element.
 Once complete, use the alert() method to alert the user that the calculation is finished*/
 
-// const holdNum = document.querySelector(".primeNum");
+// let holdNum = document.querySelector(".primeNum");
 // console.log(holdNum)
 
-let num = 8;
+// let num = 8;
   
-const isPrime = () =>{
+// const isPrime = () =>{
 
-    let isPrimeNum = true;
+//     let isPrimeNum = true;
 
-    if(num >  1){
-        for(let i = 2; i*i < num; i++){
-            if(num%i === 0){
-                isPrimeNum = false;
-            }
-        }
+//     if(num >  1){
+//         for(let i = 2; i*i < num; i++){
+//             if(num%i === 0){
+//                 isPrimeNum = false;
+//             }
+//         }
 
-    }
-    
-    return isPrimeNum
-}
+//     }
 
-console.log(isPrime(num))
+//     return num;
+// }
+
+// console.log(isPrime(num))
+
+// // //Write a function that takes a parameter n and adds a list of all prime numbers between one and n to your HTML element.
+
+// let n = 10;
+
+// const addPrimerNumbers = (n, count = 1) =>{
+
+//     if( count > n){
+//         window.alert("Calculation is finished")
+//     }
+
+//     holdNum.innerHTML += `${isPrime(num)}`
+// }
+
+// addPrimerNumbers(n)
